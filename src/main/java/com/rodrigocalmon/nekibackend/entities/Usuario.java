@@ -1,20 +1,27 @@
 package com.rodrigocalmon.nekibackend.entities;
 
 import java.util.Collection;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @SequenceGenerator(name = "generator_usuario", sequenceName = "sequence_usuario", initialValue = 1, allocationSize = 1)
@@ -36,13 +43,13 @@ public class Usuario implements UserDetails {
 	@NotBlank(message = "Nome do usuário")
 	private String nome;
 
-//	@Column(name = "data_ultimo_login")
-//	@JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss")
-//	@JsonIgnore
-//	private Date dataUltimoLogin;
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+	@JsonIgnore
+	private Date dataUltimoLogin;
 
-//	@OneToMany
-//	private List<Skill> skills;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario", fetch = FetchType.LAZY)
+	@JsonIgnore
+	private List<Skill> skills;
 
 	public Usuario() {
 
@@ -79,15 +86,22 @@ public class Usuario implements UserDetails {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-	
 
-//	public List<Skill> getSkills() {
-//		return skills;
-//	}
-//
-//	public void setSkills(List<Skill> skills) {
-//		this.skills = skills;
-//	}
+	public List<Skill> getSkills() {
+		return skills;
+	}
+
+	public void setSkills(List<Skill> skills) {
+		this.skills = skills;
+	}
+
+	public Date getDataUltimoLogin() {
+		return dataUltimoLogin;
+	}
+
+	public void setDataUltimoLogin(Date dataUltimoLogin) {
+		this.dataUltimoLogin = dataUltimoLogin;
+	}
 
 	public String getNome() {
 		return nome;
@@ -137,6 +151,23 @@ public class Usuario implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return null;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Usuario other = (Usuario) obj;
+		return Objects.equals(id, other.id);
 	}
 
 }
