@@ -1,5 +1,6 @@
 package com.rodrigocalmon.nekibackend.entities;
 
+import java.util.Date;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -12,26 +13,39 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
-public class Skill  {
+public class Skill {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_tarefa")
+	@Column(name = "id_skill")
 	private Long id;
 	private String nome;
 	private String versao;
 	private String descricao;
 	private String imagemUrl;
-	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Integer nivelDeConhecimento;
+
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+	@JsonIgnore
+	private Date criadaEm;
+
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+	@JsonIgnore
+	private Date atualizadaEm;
+
+	@ManyToOne
 	@JoinColumn(name = "id_usuario")
 	private Usuario usuario;
-	
+
 	public Skill() {
-		
+
 	}
 
-	public Skill(Long id, String nome, String versao, String descricao, String imagemUrl, Usuario usuario) {
+	public Skill(Long id, String nome, String versao, String descricao, String imagemUrl, Date criadaEm,
+			Date atualizadaEm, Integer nivelDeConhecimento, Usuario usuario) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -39,6 +53,9 @@ public class Skill  {
 		this.descricao = descricao;
 		this.imagemUrl = imagemUrl;
 		this.usuario = usuario;
+		this.criadaEm = criadaEm;
+		this.atualizadaEm = atualizadaEm;
+		this.nivelDeConhecimento = nivelDeConhecimento;
 	}
 
 	public Long getId() {
@@ -89,6 +106,30 @@ public class Skill  {
 		this.usuario = usuario;
 	}
 
+	public Date getCriadaEm() {
+		return criadaEm;
+	}
+
+	public void setCriadaEm(Date criadaEm) {
+		this.criadaEm = criadaEm;
+	}
+
+	public Date getAtualizadaEm() {
+		return atualizadaEm;
+	}
+
+	public void setAtualizadaEm(Date atualizadaEm) {
+		this.atualizadaEm = atualizadaEm;
+	}
+
+	public Integer getNivelDeConhecimento() {
+		return nivelDeConhecimento;
+	}
+
+	public void setNivelDeConhecimento(Integer nivelDeConhecimento) {
+		this.nivelDeConhecimento = nivelDeConhecimento;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
@@ -105,5 +146,5 @@ public class Skill  {
 		Skill other = (Skill) obj;
 		return Objects.equals(id, other.id);
 	}
-	
+
 }

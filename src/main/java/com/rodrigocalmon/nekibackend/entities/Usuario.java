@@ -21,7 +21,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @SequenceGenerator(name = "generator_usuario", sequenceName = "sequence_usuario", initialValue = 1, allocationSize = 1)
@@ -47,7 +46,7 @@ public class Usuario implements UserDetails {
 	@JsonIgnore
 	private Date dataUltimoLogin;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario", fetch = FetchType.LAZY)
+	@OneToMany
 	@JsonIgnore
 	private List<Skill> skills;
 
