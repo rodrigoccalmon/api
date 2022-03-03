@@ -9,15 +9,13 @@ import javax.persistence.Entity;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 public class UsuarioSkill implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@JsonIgnore
 	@EmbeddedId
 	private UsuarioSkillPK id = new UsuarioSkillPK();
+
 	private Integer nivelConhecimento;
 
 	@CreationTimestamp
@@ -29,7 +27,7 @@ public class UsuarioSkill implements Serializable {
 	public UsuarioSkill(Usuario usuario, Skill skill, Integer nivelConhecimento) {
 		super();
 		id.setUsuario(usuario);
-		id.setSkill(skill);
+		id.setSkill(skill);		
 		this.nivelConhecimento = nivelConhecimento;
 	}
 
@@ -48,9 +46,11 @@ public class UsuarioSkill implements Serializable {
 	public Skill getSkill() {
 		return id.getSkill();
 	}
+
 	public UsuarioSkillPK getId() {
 		return id;
 	}
+
 	public void setId(UsuarioSkillPK id) {
 		this.id = id;
 	}
@@ -78,5 +78,5 @@ public class UsuarioSkill implements Serializable {
 	public void setAtualizadoEm(Date atualizadoEm) {
 		this.atualizadoEm = atualizadoEm;
 	}
-	
+
 }
