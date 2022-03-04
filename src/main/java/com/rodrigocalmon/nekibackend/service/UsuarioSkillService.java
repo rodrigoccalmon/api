@@ -61,4 +61,10 @@ public class UsuarioSkillService {
 		}
 		throw new IllegalArgumentException("ID não encontrado.");
 	}
+	public UsuarioSkill insert(UsuarioSkill obj) {
+		return usuarioSkillRepo.save(obj);
+	}
+	public boolean idExisteSkill(Long id) {
+		return usuarioSkillRepo.existsById(id);
+	}
 }

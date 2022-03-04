@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.rodrigocalmon.nekibackend.dto.UsuarioSkillDTO;
-import com.rodrigocalmon.nekibackend.entities.Skill;
 import com.rodrigocalmon.nekibackend.entities.UsuarioSkill;
 import com.rodrigocalmon.nekibackend.service.UsuarioSkillService;
 
@@ -29,18 +29,20 @@ public class ClienteSkillController {
 
 	@Autowired
 	private UsuarioSkillService us;
-	
+
 	@ApiOperation(value = "pesquisar skill via id")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Long id) {
 		UsuarioSkill obj = us.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
+
 	@ApiOperation(value = "listagem de todas skills")
 	@GetMapping("/todas")
 	public List<UsuarioSkill> listar() {
 		return us.findAll();
 	}
+
 	@ApiOperation(value = "atualizar APENAS o nivel de conhecimento")
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody UsuarioSkillDTO objDto, @PathVariable Long id) {
@@ -49,6 +51,7 @@ public class ClienteSkillController {
 		obj = us.update(obj);
 		return ResponseEntity.noContent().build();
 	}
+
 	@ApiOperation(value = "postar skill")
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody UsuarioSkill obj) throws IOException {
@@ -56,5 +59,15 @@ public class ClienteSkillController {
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
-	
+
+	@ApiOperation(value = "deletar skill por Id")
+	@DeleteMapping(path = "/{id}")
+	public ResponseEntity<Void> remover(@PathVariable Long id) {
+		if (!us.idExisteSkill(id)) {
+			return ResponseEntity.notFound().build();
+		}
+		us.delete(id);
+		return ResponseEntity.noContent().build();
+	}
+
 }

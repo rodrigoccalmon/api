@@ -33,13 +33,10 @@ public class Usuario implements UserDetails {
 	@Column(name = "id_usuario")
 	private Long id;
 
-	@NotBlank(message = "Login do usuário via e-mail")
 	private String email;
 
-	@NotBlank(message = "Senha do login do usuário")
 	private String senha;
 
-	@NotBlank(message = "Nome do usuário")
 	private String nome;
 
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
