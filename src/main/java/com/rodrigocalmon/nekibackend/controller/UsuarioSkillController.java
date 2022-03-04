@@ -24,20 +24,20 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
 @RestController
-@RequestMapping(value = "/api/clienteskill")
-public class ClienteSkillController {
+@RequestMapping(value = "/api/usuarioskill")
+public class UsuarioSkillController {
 
 	@Autowired
 	private UsuarioSkillService us;
 
-	@ApiOperation(value = "pesquisar clienteskill via id")
+	@ApiOperation(value = "pesquisar usuarioskill via id")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Long id) {
 		UsuarioSkill obj = us.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
 
-	@ApiOperation(value = "listagem de todas skills")
+	@ApiOperation(value = "listagem de usuarioskill")
 	@GetMapping("/todas")
 	public List<UsuarioSkill> listar() {
 		return us.findAll();
@@ -52,7 +52,7 @@ public class ClienteSkillController {
 		return ResponseEntity.noContent().build();
 	}
 
-	@ApiOperation(value = "postar clienteskill")
+	@ApiOperation(value = "postar usuarioskill")
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody UsuarioSkill obj) throws IOException {
 		obj = us.inserir(obj);
@@ -60,7 +60,7 @@ public class ClienteSkillController {
 		return ResponseEntity.created(uri).build();
 	}
 
-	@ApiOperation(value = "deletar clienteskill por Id")
+	@ApiOperation(value = "deletar usuarioskill por Id")
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<Void> remover(@PathVariable Long id) {
 		if (!us.idExisteSkill(id)) {
