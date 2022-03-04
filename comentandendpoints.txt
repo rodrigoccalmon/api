@@ -15,7 +15,6 @@ Exemplo:
 JSON: {
   "dataUltimoLogin": "2022-03-04T15:24:04.239Z",
   "email": "string",
-  "id": 0,
   "nome": "string",
   "senha": "string"
 }
