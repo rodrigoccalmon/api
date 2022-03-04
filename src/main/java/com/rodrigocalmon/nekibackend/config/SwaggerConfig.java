@@ -22,7 +22,7 @@ public class SwaggerConfig {
 	}
 
 	private ApiInfo apiInfo() {
-		ApiInfo apiInfo = new ApiInfoBuilder().title("Teste Viceri").description(
+		ApiInfo apiInfo = new ApiInfoBuilder().title("Teste Neki iT").description(
 				"Essa foi a API desenvolvida para o teste técnico para empresa Neki iT. \n"			
 				+ "Obrigado pela oportunidade. \n"
 				+ "Atencisamente, \n"
