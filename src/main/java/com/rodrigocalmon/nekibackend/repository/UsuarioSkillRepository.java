@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.rodrigocalmon.nekibackend.entities.UsuarioSkill;
 
 @Repository
-public interface ClienteSkillRepository extends JpaRepository<UsuarioSkill, Long>{
+public interface UsuarioSkillRepository extends JpaRepository<UsuarioSkill, Long>{
 
 }
 	

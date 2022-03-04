@@ -5,6 +5,11 @@ import java.util.Date;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -13,8 +18,17 @@ import org.hibernate.annotations.UpdateTimestamp;
 public class UsuarioSkill implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private UsuarioSkillPK id = new UsuarioSkillPK();
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	@ManyToOne
+	@JoinColumn(name = "usuario_id")
+	private Usuario usuario;
+	
+	@ManyToOne
+	@JoinColumn(name = "skill_id")
+	private Skill skill;
 
 	private Integer nivelConhecimento;
 
@@ -24,35 +38,40 @@ public class UsuarioSkill implements Serializable {
 	@UpdateTimestamp
 	private Date atualizadoEm;
 
-	public UsuarioSkill(Usuario usuario, Skill skill, Integer nivelConhecimento) {
+	public UsuarioSkill() {
+		
+	}
+
+	public UsuarioSkill(Long id, Usuario usuario, Skill skill, Integer nivelConhecimento) {
 		super();
-		id.setUsuario(usuario);
-		id.setSkill(skill);		
+		this.id = id;
+		this.usuario = usuario;
+		this.skill = skill;
 		this.nivelConhecimento = nivelConhecimento;
 	}
 
-	public void setUsuario(Usuario usuario) {
-		id.setUsuario(usuario);
-	}
-
-	public void setSkill(Skill skill) {
-		id.setSkill(skill);
-	}
-
-	public Usuario getUsuario() {
-		return id.getUsuario();
-	}
-
-	public Skill getSkill() {
-		return id.getSkill();
-	}
-
-	public UsuarioSkillPK getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(UsuarioSkillPK id) {
+	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public Skill getSkill() {
+		return skill;
+	}
+
+	public void setSkill(Skill skill) {
+		this.skill = skill;
 	}
 
 	public Integer getNivelConhecimento() {
@@ -78,5 +97,5 @@ public class UsuarioSkill implements Serializable {
 	public void setAtualizadoEm(Date atualizadoEm) {
 		this.atualizadoEm = atualizadoEm;
 	}
-
+	
 }
