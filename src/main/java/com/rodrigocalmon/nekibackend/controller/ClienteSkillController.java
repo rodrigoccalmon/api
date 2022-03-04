@@ -30,7 +30,7 @@ public class ClienteSkillController {
 	@Autowired
 	private UsuarioSkillService us;
 
-	@ApiOperation(value = "pesquisar skill via id")
+	@ApiOperation(value = "pesquisar clienteskill via id")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Long id) {
 		UsuarioSkill obj = us.find(id);
@@ -52,7 +52,7 @@ public class ClienteSkillController {
 		return ResponseEntity.noContent().build();
 	}
 
-	@ApiOperation(value = "postar skill")
+	@ApiOperation(value = "postar clienteskill")
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody UsuarioSkill obj) throws IOException {
 		obj = us.inserir(obj);
@@ -60,7 +60,7 @@ public class ClienteSkillController {
 		return ResponseEntity.created(uri).build();
 	}
 
-	@ApiOperation(value = "deletar skill por Id")
+	@ApiOperation(value = "deletar clienteskill por Id")
 	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<Void> remover(@PathVariable Long id) {
 		if (!us.idExisteSkill(id)) {
